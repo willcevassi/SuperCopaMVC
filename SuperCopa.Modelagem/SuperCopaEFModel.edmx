@@ -1,0 +1,223 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="SuperCopaEFModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Agentes">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nome" Type="nvarchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Atletas">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Altura" Type="decimal" Precision="12" Scale="2" />
+          <Property Name="PosicaoPrincipal" Type="nvarchar" MaxLength="30" />
+          <Property Name="Peso" Type="decimal" Precision="12" Scale="2" />
+          <Property Name="DataNascimento" Type="datetime" />
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Equipe_Id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Equipes">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nome" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Treinador_Id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Treinadores">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Atleta_inherits_Agente2">
+          <End Role="Agentes" Type="Self.Agentes" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Atletas" Type="Self.Atletas" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Agentes">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Atletas">
+              <PropertyRef Name="Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EquipeAtletas2">
+          <End Role="Equipes" Type="Self.Equipes" Multiplicity="1" />
+          <End Role="Atletas" Type="Self.Atletas" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Equipes">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Atletas">
+              <PropertyRef Name="Equipe_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EquipeTreinador2">
+          <End Role="Treinadores" Type="Self.Treinadores" Multiplicity="1" />
+          <End Role="Equipes" Type="Self.Equipes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Treinadores">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Equipes">
+              <PropertyRef Name="Treinador_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Treinador_inherits_Agente2">
+          <End Role="Agentes" Type="Self.Agentes" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Treinadores" Type="Self.Treinadores" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Agentes">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Treinadores">
+              <PropertyRef Name="Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="SuperCopaEFModelStoreContainer">
+          <EntitySet Name="Agentes" EntityType="Self.Agentes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Atletas" EntityType="Self.Atletas" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Equipes" EntityType="Self.Equipes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Treinadores" EntityType="Self.Treinadores" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Atleta_inherits_Agente2" Association="Self.FK_Atleta_inherits_Agente2">
+            <End Role="Agentes" EntitySet="Agentes" />
+            <End Role="Atletas" EntitySet="Atletas" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EquipeAtletas2" Association="Self.FK_EquipeAtletas2">
+            <End Role="Equipes" EntitySet="Equipes" />
+            <End Role="Atletas" EntitySet="Atletas" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EquipeTreinador2" Association="Self.FK_EquipeTreinador2">
+            <End Role="Treinadores" EntitySet="Treinadores" />
+            <End Role="Equipes" EntitySet="Equipes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Treinador_inherits_Agente2" Association="Self.FK_Treinador_inherits_Agente2">
+            <End Role="Agentes" EntitySet="Agentes" />
+            <End Role="Treinadores" EntitySet="Treinadores" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema xmlns="http://schemas.microsoft.com/ado/2009/11/edm" xmlns:cg="http://schemas.microsoft.com/ado/2006/04/codegeneration" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" Namespace="SuperCopaEFModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" annotation:UseStrongSpatialTypes="false">
+        <EntityContainer Name="SuperCopaEFModelContainer" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="AgenteSet" EntityType="SuperCopaEFModel.Agente" />
+          <EntitySet Name="Equipes" EntityType="SuperCopaEFModel.Equipe" />
+          <AssociationSet Name="FK_EquipeTreinador2" Association="SuperCopaEFModel.FK_EquipeTreinador2">
+            <End Role="Treinador" EntitySet="AgenteSet" />
+            <End Role="Equipes" EntitySet="Equipes" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Agente">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nome" Type="String" Nullable="false" MaxLength="100" Unicode="true" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="Atleta" BaseType="SuperCopaEFModel.Agente" >
+          <Property Name="Altura" Type="Decimal" Nullable="true" Precision="12" Scale="2" />
+          <Property Name="PosicaoPrincipal" Type="String" Nullable="true" MaxLength="30" Unicode="true" FixedLength="false" />
+          <Property Name="Peso" Type="Decimal" Precision="12" Scale="2" Nullable="true" />
+          <Property Name="DataNascimento" Type="DateTime" Nullable="true" Precision="3" />
+        </EntityType>
+        <EntityType Name="Treinador" BaseType="SuperCopaEFModel.Agente" >
+          <NavigationProperty Name="Equipes" Relationship="SuperCopaEFModel.FK_EquipeTreinador2" FromRole="Treinador" ToRole="Equipes" />
+        </EntityType>
+        <EntityType Name="Equipe">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nome" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Treinador_Id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Treinador" Relationship="SuperCopaEFModel.FK_EquipeTreinador2" FromRole="Equipes" ToRole="Treinador" />
+        </EntityType>
+        <Association Name="FK_EquipeTreinador2">
+          <End Type="SuperCopaEFModel.Treinador" Role="Treinador" Multiplicity="1" />
+          <End Type="SuperCopaEFModel.Equipe" Role="Equipes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Treinador">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Equipes">
+              <PropertyRef Name="Treinador_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+    <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="SuperCopaEFModelStoreContainer" CdmEntityContainer="SuperCopaEFModelContainer">
+    <EntitySetMapping Name="AgenteSet">
+            <EntityTypeMapping TypeName="IsTypeOf(SuperCopaEFModel.Agente)">
+              <MappingFragment StoreEntitySet="Agentes">
+                <ScalarProperty Name="Nome" ColumnName="Nome" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+            <EntityTypeMapping TypeName="IsTypeOf(SuperCopaEFModel.Treinador)">
+              <MappingFragment StoreEntitySet="Treinadores">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+            <EntityTypeMapping TypeName="IsTypeOf(SuperCopaEFModel.Atleta)">
+              <MappingFragment StoreEntitySet="Atletas">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="DataNascimento" ColumnName="DataNascimento" />
+                <ScalarProperty Name="Peso" ColumnName="Peso" />
+                <ScalarProperty Name="PosicaoPrincipal" ColumnName="PosicaoPrincipal" />
+                <ScalarProperty Name="Altura" ColumnName="Altura" />
+              </MappingFragment>
+            </EntityTypeMapping>
+    </EntitySetMapping>
+          <EntitySetMapping Name="Equipes">
+            <EntityTypeMapping TypeName="SuperCopaEFModel.Equipe">
+              <MappingFragment StoreEntitySet="Equipes">
+                <ScalarProperty Name="Treinador_Id" ColumnName="Treinador_Id" />
+                <ScalarProperty Name="Nome" ColumnName="Nome" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping></edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <edmx:Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </edmx:Connection>
+    <edmx:Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="False" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+        <DesignerProperty Name="UseLegacyProvider" Value="False" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+      </DesignerInfoPropertySet>
+    </edmx:Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
